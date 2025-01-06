@@ -7,7 +7,7 @@ import { ProtocolErrors, RateMode } from '../helpers/types';
 import { calcExpectedVariableDebtTokenBalance } from './helpers/utils/calculations';
 import { getUserData, getReserveData } from './helpers/utils/helpers';
 import { makeSuite } from './helpers/make-suite';
-import { waitForTx } from '@aave/deploy-v3';
+import { waitForTx } from '@hedy_chu/deploy-v3';
 import { HardhatRuntimeEnvironment } from 'hardhat/types';
 
 declare var hre: HardhatRuntimeEnvironment;

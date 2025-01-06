@@ -9,6 +9,7 @@ import {Errors} from '../libraries/helpers/Errors.sol';
 import {IDefaultInterestRateStrategy} from '../../interfaces/IDefaultInterestRateStrategy.sol';
 import {IReserveInterestRateStrategy} from '../../interfaces/IReserveInterestRateStrategy.sol';
 import {IPoolAddressesProvider} from '../../interfaces/IPoolAddressesProvider.sol';
+import {console} from 'hardhat/console.sol';
 
 /**
  * @title DefaultReserveInterestRateStrategy contract
@@ -165,6 +166,7 @@ contract DefaultReserveInterestRateStrategy is IDefaultInterestRateStrategy {
     vars.currentLiquidityRate = 0;
     vars.currentVariableBorrowRate = _baseVariableBorrowRate;
     vars.currentStableBorrowRate = getBaseStableBorrowRate();
+    console.log('currentStableBorrowRate', vars.currentStableBorrowRate);
 
     if (vars.totalDebt != 0) {
       vars.stableToTotalDebtRatio = params.totalStableDebt.rayDiv(vars.totalDebt);
@@ -184,7 +186,7 @@ contract DefaultReserveInterestRateStrategy is IDefaultInterestRateStrategy {
       uint256 excessBorrowUsageRatio = (vars.borrowUsageRatio - OPTIMAL_USAGE_RATIO).rayDiv(
         MAX_EXCESS_USAGE_RATIO
       );
-
+      console.log('vars.borrowUsageRatio > OPTIMAL_USAGE_RATIO');
       vars.currentStableBorrowRate +=
         _stableRateSlope1 +
         _stableRateSlope2.rayMul(excessBorrowUsageRatio);
@@ -193,9 +195,13 @@ contract DefaultReserveInterestRateStrategy is IDefaultInterestRateStrategy {
         _variableRateSlope1 +
         _variableRateSlope2.rayMul(excessBorrowUsageRatio);
     } else {
+      console.log('vars.borrowUsageRatio <= OPTIMAL_USAGE_RATIO');
+      console.log('OPTIMAL_USAGE_RATIO', OPTIMAL_USAGE_RATIO);
       vars.currentStableBorrowRate += _stableRateSlope1.rayMul(vars.borrowUsageRatio).rayDiv(
         OPTIMAL_USAGE_RATIO
       );
+      console.log('_stableRateSlope1', _stableRateSlope1);
+      console.log('vars.borrowUsageRatio', vars.borrowUsageRatio);
 
       vars.currentVariableBorrowRate += _variableRateSlope1.rayMul(vars.borrowUsageRatio).rayDiv(
         OPTIMAL_USAGE_RATIO
@@ -203,9 +209,14 @@ contract DefaultReserveInterestRateStrategy is IDefaultInterestRateStrategy {
     }
 
     if (vars.stableToTotalDebtRatio > OPTIMAL_STABLE_TO_TOTAL_DEBT_RATIO) {
+      console.log('vars.stableToTotalDebtRatio > OPTIMAL_STABLE_TO_TOTAL_DEBT_RATIO');
       uint256 excessStableDebtRatio = (vars.stableToTotalDebtRatio -
         OPTIMAL_STABLE_TO_TOTAL_DEBT_RATIO).rayDiv(MAX_EXCESS_STABLE_TO_TOTAL_DEBT_RATIO);
       vars.currentStableBorrowRate += _stableRateExcessOffset.rayMul(excessStableDebtRatio);
+      console.log(
+        '_stableRateExcessOffset.rayMul(excessStableDebtRatio)',
+        _stableRateExcessOffset.rayMul(excessStableDebtRatio)
+      );
     }
 
     vars.currentLiquidityRate = _getOverallBorrowRate(
@@ -217,6 +228,7 @@ contract DefaultReserveInterestRateStrategy is IDefaultInterestRateStrategy {
         PercentageMath.PERCENTAGE_FACTOR - params.reserveFactor
       );
 
+    console.log('currentStableBorrowRate', vars.currentStableBorrowRate);
     return (
       vars.currentLiquidityRate,
       vars.currentStableBorrowRate,

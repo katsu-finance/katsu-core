@@ -1,5 +1,5 @@
 import { MockATokenRepayment } from './../types/mocks/tokens/MockATokenRepayment';
-import { waitForTx, increaseTime, ZERO_ADDRESS } from '@aave/deploy-v3';
+import { waitForTx, increaseTime, ZERO_ADDRESS } from '@hedy_chu/deploy-v3';
 import { expect } from 'chai';
 import { BigNumber, utils } from 'ethers';
 import { MAX_UINT_AMOUNT } from '../helpers/constants';

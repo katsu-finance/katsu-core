@@ -23,7 +23,7 @@ import {
   getStableDebtToken,
   getVariableDebtToken,
   getTestnetReserveAddressFromSymbol,
-} from '@aave/deploy-v3/dist/helpers/contract-getters';
+} from '@hedy_chu/deploy-v3/dist/helpers/contract-getters';
 import { MAX_UINT_AMOUNT, ONE_YEAR } from '../../helpers/constants';
 import { SignerWithAddress, TestEnv } from './make-suite';
 import chai from 'chai';
@@ -32,7 +32,7 @@ import { ContractReceipt, Wallet } from 'ethers';
 import { AToken } from '../../types/AToken';
 import { RateMode, tEthereumAddress } from '../../helpers/types';
 import { MintableERC20__factory } from '../../types';
-import { waitForTx, advanceTimeAndBlock } from '@aave/deploy-v3';
+import { waitForTx, advanceTimeAndBlock } from '@hedy_chu/deploy-v3';
 import { getChainId } from 'hardhat';
 import { timeLatest } from '../../helpers/misc-utils';
 import { HardhatRuntimeEnvironment } from 'hardhat/types';

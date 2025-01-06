@@ -13,7 +13,7 @@ import {
   getStableDebtToken,
   getAaveOracle,
   getACLManager,
-} from '@aave/deploy-v3/dist/helpers/contract-getters';
+} from '@hedy_chu/deploy-v3/dist/helpers/contract-getters';
 import {
   waitForTx,
   evmSnapshot,
@@ -22,7 +22,7 @@ import {
   deployPriceOracle,
   Faucet,
   getFaucet,
-} from '@aave/deploy-v3';
+} from '@hedy_chu/deploy-v3';
 import { Pool } from '../../types/Pool';
 import { AaveProtocolDataProvider } from '../../types/AaveProtocolDataProvider';
 import { MintableERC20 } from '../../types/MintableERC20';
@@ -103,6 +103,8 @@ const testEnv: TestEnv = {
 
 export async function initializeMakeSuite() {
   const [_deployer, ...restSigners] = await getEthersSigners();
+  const _deployerAddress = await _deployer.getAddress();
+  console.log('Deployer address: ', _deployerAddress);
   const deployer: SignerWithAddress = {
     address: await _deployer.getAddress(),
     signer: _deployer,

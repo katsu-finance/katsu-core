@@ -12,6 +12,7 @@ import {PercentageMath} from '../math/PercentageMath.sol';
 import {ValidationLogic} from './ValidationLogic.sol';
 import {ReserveLogic} from './ReserveLogic.sol';
 import {ReserveConfiguration} from '../configuration/ReserveConfiguration.sol';
+import {console} from 'hardhat/console.sol';
 
 /**
  * @title SupplyLogic library

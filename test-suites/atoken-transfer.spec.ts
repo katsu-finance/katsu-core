@@ -1,4 +1,4 @@
-import { evmSnapshot, evmRevert } from '@aave/deploy-v3';
+import { evmSnapshot, evmRevert } from '@hedy_chu/deploy-v3';
 import { expect } from 'chai';
 import { MAX_UINT_AMOUNT } from '../helpers/constants';
 import { convertToCurrencyDecimals } from '../helpers/contracts-helpers';
@@ -42,7 +42,7 @@ makeSuite('AToken: Transfer', (testEnv: TestEnv) => {
 
     const name = await aDai.name();
 
-    expect(name).to.be.equal('Aave Testnet DAI');
+    expect(name).to.be.equal('Aave Katsu DAI');
 
     const fromBalance = await aDai.balanceOf(users[0].address);
     const toBalance = await aDai.balanceOf(users[0].address);
@@ -77,7 +77,7 @@ makeSuite('AToken: Transfer', (testEnv: TestEnv) => {
 
     const name = await aDai.name();
 
-    expect(name).to.be.equal('Aave Testnet DAI');
+    expect(name).to.be.equal('Aave Katsu DAI');
 
     const fromBalance = await aDai.balanceOf(users[0].address);
     const toBalance = await aDai.balanceOf(users[1].address);
@@ -174,7 +174,7 @@ makeSuite('AToken: Transfer', (testEnv: TestEnv) => {
 
     const name = await aDai.name();
 
-    expect(name).to.be.equal('Aave Testnet DAI');
+    expect(name).to.be.equal('Aave Katsu DAI');
 
     const fromBalance = await aDai.balanceOf(users[0].address);
     const toBalance = await aDai.balanceOf(users[1].address);

@@ -14,12 +14,13 @@ import 'hardhat-contract-sizer';
 import 'hardhat-dependency-compiler';
 import '@nomicfoundation/hardhat-chai-matchers';
 
-import { DEFAULT_NAMED_ACCOUNTS } from '@aave/deploy-v3';
+import { DEFAULT_NAMED_ACCOUNTS } from '@hedy_chu/deploy-v3';
 
 const DEFAULT_BLOCK_GAS_LIMIT = 12450000;
 const HARDFORK = 'london';
 
 const hardhatConfig = {
+  defaultNetwork: 'hardhat',
   gasReporter: {
     enabled: true,
   },
@@ -91,7 +92,7 @@ const hardhatConfig = {
     contracts: [
       {
         artifacts: './temp-artifacts',
-        deploy: 'node_modules/@aave/deploy-v3/dist/deploy',
+        deploy: 'node_modules/@hedy_chu/deploy-v3/dist/deploy',
       },
     ],
   },

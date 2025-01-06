@@ -13,7 +13,7 @@ import {
   AToken__factory,
   StableDebtToken__factory,
   VariableDebtToken__factory,
-} from '@aave/deploy-v3';
+} from '@hedy_chu/deploy-v3';
 
 makeSuite('Pool Liquidation: Edge cases', (testEnv: TestEnv) => {
   let snap: string;

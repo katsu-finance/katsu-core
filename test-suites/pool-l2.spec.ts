@@ -2,7 +2,7 @@ import { expect } from 'chai';
 import { BigNumber, Signer, utils } from 'ethers';
 import { impersonateAccountsHardhat } from '../helpers/misc-utils';
 import { ProtocolErrors, RateMode } from '../helpers/types';
-import { getFirstSigner } from '@aave/deploy-v3/dist/helpers/utilities/signer';
+import { getFirstSigner } from '@hedy_chu/deploy-v3/dist/helpers/utilities/signer';
 import { makeSuite, TestEnv } from './helpers/make-suite';
 import { HardhatRuntimeEnvironment } from 'hardhat/types';
 import {
@@ -12,7 +12,7 @@ import {
   VariableDebtToken__factory,
   increaseTime,
   AaveDistributionManager,
-} from '@aave/deploy-v3';
+} from '@hedy_chu/deploy-v3';
 import {
   InitializableImmutableAdminUpgradeabilityProxy,
   MockL2Pool__factory,
