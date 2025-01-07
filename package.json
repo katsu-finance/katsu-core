@@ -37,7 +37,7 @@
   },
   "devDependencies": {
     "@ethersproject/bignumber": "^5.6.2",
-    "@hedy_chu/deploy-v3": "1.47.2",
+    "@hedy_chu/deploy-v3": "1.47.3",
     "@hedy_chu/periphery-v3": "2.4.8",
     "@nomicfoundation/hardhat-chai-matchers": "1.0.5",
     "@nomicfoundation/hardhat-toolbox": "^2.0.0",

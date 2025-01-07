@@ -1418,12 +1418,6 @@ const calcExpectedUserStableRate = (
   amount: BigNumber,
   rateNew: BigNumber
 ) => {
-  console.log('Calculating Expected User Stable Rate with the following parameters:', {
-    balanceBefore: balanceBefore.toString(),
-    rateBefore: rateBefore.toString(),
-    amount: amount.toString(),
-    rateNew: rateNew.toString(),
-  });
   return balanceBefore.mul(rateBefore).add(amount.mul(rateNew)).div(balanceBefore.add(amount));
 };
 

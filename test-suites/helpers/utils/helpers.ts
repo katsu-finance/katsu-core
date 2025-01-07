@@ -63,7 +63,6 @@ export const getReserveData = async (
     : totalDebt.rayDiv(totalLiquidity.add(totalDebt));
 
   expect(supplyUsageRatio).to.be.lte(borrowUsageRatio, 'Supply usage ratio > borrow usage ratio');
-  console.log('reserveData.stableBorrowRate:', reserveData.stableBorrowRate);
 
   return {
     reserveFactor,
