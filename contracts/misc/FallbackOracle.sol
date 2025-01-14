@@ -3,17 +3,24 @@ pragma solidity ^0.8.10;
 
 import {IPyth} from '../dependencies/pyth/IPyth.sol';
 import {PythStructs} from '../dependencies/pyth/PythStructs.sol';
-import {AccessControl} from '../dependencies/openzeppelin/contracts/AccessControl.sol';
+import {IACLManager} from '../interfaces/IACLManager.sol';
+import {IPoolAddressesProvider} from '../interfaces/IPoolAddressesProvider.sol';
 import {Errors} from '../protocol/libraries/helpers/Errors.sol';
 
-contract FallbackOracle is AccessControl {
+contract FallbackOracle {
+  IPoolAddressesProvider public immutable ADDRESSES_PROVIDER;
   IPyth public immutable pyth;
   mapping(address => bytes32) public priceIds;
   mapping(address => bool) public isSupporttedAsset;
 
-  constructor(IPyth _pyth, address[] memory _assets, bytes32[] memory _priceIds) {
+  constructor(
+    IPoolAddressesProvider provider,
+    IPyth _pyth,
+    address[] memory _assets,
+    bytes32[] memory _priceIds
+  ) {
+    ADDRESSES_PROVIDER = provider;
     pyth = _pyth;
-    _setupRole(DEFAULT_ADMIN_ROLE, msg.sender);
     _setPriceId(_assets, _priceIds);
   }
 
@@ -22,10 +29,15 @@ contract FallbackOracle is AccessControl {
     _;
   }
 
+  modifier onlyAssetListingOrPoolAdmins() {
+    _onlyAssetListingOrPoolAdmins();
+    _;
+  }
+
   function setPriceId(
     address[] memory _assets,
     bytes32[] memory _priceIds
-  ) external onlyRole(DEFAULT_ADMIN_ROLE) {
+  ) external onlyAssetListingOrPoolAdmins {
     _setPriceId(_assets, _priceIds);
   }
 
@@ -58,7 +70,7 @@ contract FallbackOracle is AccessControl {
     if (priceInfo.price >= 0) {
       return uint256(uint64(priceInfo.price));
     } else {
-      revert('Price not available');
+      return 0;
     }
   }
 
@@ -80,5 +92,13 @@ contract FallbackOracle is AccessControl {
   ) external view checkSupporttedAsset(_asset) returns (uint256 price, uint8 decimals) {
     price = getAssetPrice(_asset);
     decimals = getDecimals(_asset);
+  }
+
+  function _onlyAssetListingOrPoolAdmins() internal view {
+    IACLManager aclManager = IACLManager(ADDRESSES_PROVIDER.getACLManager());
+    require(
+      aclManager.isAssetListingAdmin(msg.sender) || aclManager.isPoolAdmin(msg.sender),
+      Errors.CALLER_NOT_ASSET_LISTING_OR_POOL_ADMIN
+    );
   }
 }
