@@ -31,13 +31,6 @@ interface IAaveOracle is IPriceOracleGetter {
   event FallbackOracleUpdated(address indexed fallbackOracle);
 
   /**
-   * @dev Emitted after the price Id of an asset is updated
-   * @param asset The address of the asset
-   * @param priceId The price Id of the asset
-   */
-  event AssetPriceIdUpdated(address indexed asset, bytes32 indexed priceId);
-
-  /**
    * @notice Returns the PoolAddressesProvider
    * @return The address of the PoolAddressesProvider contract
    */
@@ -48,15 +41,13 @@ interface IAaveOracle is IPriceOracleGetter {
    * @param assets The addresses of the assets
    * @param sources The addresses of the price sources
    */
-  // function setAssetSources(address[] calldata assets, address[] calldata sources) external;
+  function setAssetSources(address[] calldata assets, address[] calldata sources) external;
 
   /**
    * @notice Sets the fallback oracle
    * @param fallbackOracle The address of the fallback oracle
    */
   function setFallbackOracle(address fallbackOracle) external;
-
-  function setAssetsPriceIds(address[] calldata assets, bytes32[] memory priceIds) external;
 
   /**
    * @notice Returns a list of prices from a list of assets addresses
@@ -70,16 +61,7 @@ interface IAaveOracle is IPriceOracleGetter {
    * @param asset The address of the asset
    * @return The address of the source
    */
-  // function getSourceOfAsset(address asset) external view returns (address);
-
-  /**
-   * @notice Returns the priceId of the source for an asset address
-   * @param asset The address of the asset
-   * @return The priceId of the source
-   */
-  function getPriceIdOfAsset(address asset) external view returns (bytes32);
-
-  function getPyth() external view returns (address);
+  function getSourceOfAsset(address asset) external view returns (address);
 
   /**
    * @notice Returns the address of the fallback oracle

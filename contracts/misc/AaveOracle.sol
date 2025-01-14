@@ -1,14 +1,12 @@
 // SPDX-License-Identifier: BUSL-1.1
 pragma solidity ^0.8.10;
 
-import {IPyth} from '../dependencies/pyth/IPyth.sol';
-import {PythStructs} from '../dependencies/pyth/PythStructs.sol';
+import {AggregatorInterface} from '../dependencies/chainlink/AggregatorInterface.sol';
 import {Errors} from '../protocol/libraries/helpers/Errors.sol';
 import {IACLManager} from '../interfaces/IACLManager.sol';
 import {IPoolAddressesProvider} from '../interfaces/IPoolAddressesProvider.sol';
 import {IPriceOracleGetter} from '../interfaces/IPriceOracleGetter.sol';
 import {IAaveOracle} from '../interfaces/IAaveOracle.sol';
-import {console} from 'hardhat/console.sol';
 
 /**
  * @title AaveOracle
@@ -21,10 +19,8 @@ import {console} from 'hardhat/console.sol';
 contract AaveOracle is IAaveOracle {
   IPoolAddressesProvider public immutable ADDRESSES_PROVIDER;
 
-  IPyth public pyth;
-
-  // Map of asset price priceId (asset => priceId)
-  mapping(address => bytes32) private assetsPriceIds;
+  // Map of asset price sources (asset => priceSource)
+  mapping(address => AggregatorInterface) private assetsSources;
 
   IPriceOracleGetter private _fallbackOracle;
   address public immutable override BASE_CURRENCY;
@@ -42,7 +38,7 @@ contract AaveOracle is IAaveOracle {
    * @notice Constructor
    * @param provider The address of the new PoolAddressesProvider
    * @param assets The addresses of the assets
-   * @param priceIds The priceId of the asset
+   * @param sources The address of the source of each asset
    * @param fallbackOracle The address of the fallback oracle to use if the data of an
    *        aggregator is not consistent
    * @param baseCurrency The base currency used for the price quotes. If USD is used, base currency is 0x0
@@ -51,19 +47,25 @@ contract AaveOracle is IAaveOracle {
   constructor(
     IPoolAddressesProvider provider,
     address[] memory assets,
-    bytes32[] memory priceIds,
-    IPyth pythAddress,
+    address[] memory sources,
     address fallbackOracle,
     address baseCurrency,
     uint256 baseCurrencyUnit
   ) {
     ADDRESSES_PROVIDER = provider;
-    pyth = pythAddress;
     _setFallbackOracle(fallbackOracle);
-    _setAssetsPriceId(assets, priceIds);
+    _setAssetsSources(assets, sources);
     BASE_CURRENCY = baseCurrency;
     BASE_CURRENCY_UNIT = baseCurrencyUnit;
     emit BaseCurrencySet(baseCurrency, baseCurrencyUnit);
+  }
+
+  /// @inheritdoc IAaveOracle
+  function setAssetSources(
+    address[] calldata assets,
+    address[] calldata sources
+  ) external override onlyAssetListingOrPoolAdmins {
+    _setAssetsSources(assets, sources);
   }
 
   /// @inheritdoc IAaveOracle
@@ -73,18 +75,16 @@ contract AaveOracle is IAaveOracle {
     _setFallbackOracle(fallbackOracle);
   }
 
-  function setAssetsPriceIds(
-    address[] calldata assets,
-    bytes32[] memory priceIds
-  ) external override onlyAssetListingOrPoolAdmins {
-    _setAssetsPriceId(assets, priceIds);
-  }
-
-  function _setAssetsPriceId(address[] memory assets, bytes32[] memory priceIds) internal {
-    require(assets.length == priceIds.length, Errors.INCONSISTENT_PARAMS_LENGTH);
+  /**
+   * @notice Internal function to set the sources for each asset
+   * @param assets The addresses of the assets
+   * @param sources The address of the source of each asset
+   */
+  function _setAssetsSources(address[] memory assets, address[] memory sources) internal {
+    require(assets.length == sources.length, Errors.INCONSISTENT_PARAMS_LENGTH);
     for (uint256 i = 0; i < assets.length; i++) {
-      assetsPriceIds[assets[i]] = priceIds[i];
-      emit AssetPriceIdUpdated(assets[i], priceIds[i]);
+      assetsSources[assets[i]] = AggregatorInterface(sources[i]);
+      emit AssetSourceUpdated(assets[i], sources[i]);
     }
   }
 
@@ -99,16 +99,16 @@ contract AaveOracle is IAaveOracle {
 
   /// @inheritdoc IPriceOracleGetter
   function getAssetPrice(address asset) public view override returns (uint256) {
-    bytes32 priceId = assetsPriceIds[asset];
+    AggregatorInterface source = assetsSources[asset];
 
     if (asset == BASE_CURRENCY) {
       return BASE_CURRENCY_UNIT;
-    } else if (address(pyth) == address(0)) {
+    } else if (address(source) == address(0)) {
       return _fallbackOracle.getAssetPrice(asset);
     } else {
-      PythStructs.Price memory currentBasePrice = pyth.getPriceNoOlderThan(priceId, 60);
-      if (currentBasePrice.price >= 0) {
-        return uint256(uint64(currentBasePrice.price));
+      int256 price = source.latestAnswer();
+      if (price > 0) {
+        return uint256(price);
       } else {
         return _fallbackOracle.getAssetPrice(asset);
       }
@@ -126,22 +126,14 @@ contract AaveOracle is IAaveOracle {
     return prices;
   }
 
-  // /// @inheritdoc IAaveOracle
-  // function getSourceOfAsset(address asset) external view override returns (address) {
-  //   return address(assetsSources[asset]);
-  // }
-
-  function getPriceIdOfAsset(address asset) external view override returns (bytes32) {
-    return assetsPriceIds[asset];
+  /// @inheritdoc IAaveOracle
+  function getSourceOfAsset(address asset) external view override returns (address) {
+    return address(assetsSources[asset]);
   }
 
   /// @inheritdoc IAaveOracle
   function getFallbackOracle() external view returns (address) {
     return address(_fallbackOracle);
-  }
-
-  function getPyth() external view returns (address) {
-    return address(pyth);
   }
 
   function _onlyAssetListingOrPoolAdmins() internal view {
