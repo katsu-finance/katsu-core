@@ -4,10 +4,11 @@ pragma solidity ^0.8.10;
 import {IPyth} from '../dependencies/pyth/IPyth.sol';
 import {PythStructs} from '../dependencies/pyth/PythStructs.sol';
 import {IACLManager} from '../interfaces/IACLManager.sol';
+import {IFallbackOracle} from '../interfaces/IFallbackOracle.sol';
 import {IPoolAddressesProvider} from '../interfaces/IPoolAddressesProvider.sol';
 import {Errors} from '../protocol/libraries/helpers/Errors.sol';
 
-contract FallbackOracle {
+contract FallbackOracle is IFallbackOracle {
   IPoolAddressesProvider public immutable ADDRESSES_PROVIDER;
   IPyth public immutable pyth;
   mapping(address => bytes32) public priceIds;
