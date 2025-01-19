@@ -10,7 +10,7 @@ import {Errors} from '../protocol/libraries/helpers/Errors.sol';
 
 contract FallbackOracle is IFallbackOracle {
   IPoolAddressesProvider public immutable ADDRESSES_PROVIDER;
-  IPyth public immutable pyth;
+  IPyth public pyth;
   mapping(address => bytes32) public priceIds;
   mapping(address => bool) public isSupporttedAsset;
 
@@ -48,6 +48,10 @@ contract FallbackOracle is IFallbackOracle {
       priceIds[_assets[i]] = _priceIds[i];
       isSupporttedAsset[_assets[i]] = true;
     }
+  }
+
+  function setPyth(IPyth _pyth) external onlyAssetListingOrPoolAdmins {
+    pyth = _pyth;
   }
 
   function getPriceId(address _asset) public view returns (bytes32 priceId) {
@@ -93,6 +97,10 @@ contract FallbackOracle is IFallbackOracle {
   ) external view checkSupporttedAsset(_asset) returns (uint256 price, uint8 decimals) {
     price = getAssetPrice(_asset);
     decimals = getDecimals(_asset);
+  }
+
+  function getPyth() external view returns (address) {
+    return address(pyth);
   }
 
   function _onlyAssetListingOrPoolAdmins() internal view {

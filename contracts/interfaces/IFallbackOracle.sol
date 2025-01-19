@@ -11,4 +11,6 @@ interface IFallbackOracle {
   function getAssetPriceAndDecimals(
     address _asset
   ) external view returns (uint256 price, uint8 decimals);
+
+  function getPyth() external view returns (address);
 }
