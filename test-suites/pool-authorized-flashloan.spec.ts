@@ -4,7 +4,7 @@ import {
   getMockFlashLoanReceiver,
   getStableDebtToken,
   getVariableDebtToken,
-} from '@hedy_chu/deploy-v3/dist/helpers/contract-getters';
+} from '@aave/deploy-v3/dist/helpers/contract-getters';
 import { ProtocolErrors } from '../helpers/types';
 import { convertToCurrencyDecimals } from '../helpers/contracts-helpers';
 import { MAX_UINT_AMOUNT } from '../helpers/constants';

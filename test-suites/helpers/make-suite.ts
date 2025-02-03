@@ -13,7 +13,7 @@ import {
   getStableDebtToken,
   getAaveOracle,
   getACLManager,
-} from '@hedy_chu/deploy-v3/dist/helpers/contract-getters';
+} from '@aave/deploy-v3/dist/helpers/contract-getters';
 import {
   waitForTx,
   evmSnapshot,
@@ -22,7 +22,7 @@ import {
   deployPriceOracle,
   Faucet,
   getFaucet,
-} from '@hedy_chu/deploy-v3';
+} from '@aave/deploy-v3';
 import { Pool } from '../../types/Pool';
 import { AaveProtocolDataProvider } from '../../types/AaveProtocolDataProvider';
 import { MintableERC20 } from '../../types/MintableERC20';

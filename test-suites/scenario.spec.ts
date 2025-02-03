@@ -1,5 +1,5 @@
 import fs from 'fs';
-import AaveConfig from '@hedy_chu/deploy-v3/dist/markets/test';
+import AaveConfig from '@aave/deploy-v3/dist/markets/test';
 import { configuration as actionsConfiguration } from './helpers/actions';
 import { configuration as calculationsConfiguration } from './helpers/utils/calculations';
 import { makeSuite } from './helpers/make-suite';

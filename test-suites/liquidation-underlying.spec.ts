@@ -6,7 +6,7 @@ import { ProtocolErrors, RateMode } from '../helpers/types';
 import { calcExpectedStableDebtTokenBalance } from './helpers/utils/calculations';
 import { getReserveData, getUserData } from './helpers/utils/helpers';
 import { makeSuite } from './helpers/make-suite';
-import { increaseTime, waitForTx } from '@hedy_chu/deploy-v3';
+import { increaseTime, waitForTx } from '@aave/deploy-v3';
 
 import { HardhatRuntimeEnvironment } from 'hardhat/types';
 

@@ -8,9 +8,9 @@ import {
   getMockFlashLoanReceiver,
   getMockPool,
   getPoolConfiguratorProxy,
-} from '@hedy_chu/deploy-v3/dist/helpers/contract-getters';
-import { getFirstSigner } from '@hedy_chu/deploy-v3/dist/helpers/utilities/signer';
-import { deployMockPool } from '@hedy_chu/deploy-v3/dist/helpers/contract-deployments';
+} from '@aave/deploy-v3/dist/helpers/contract-getters';
+import { getFirstSigner } from '@aave/deploy-v3/dist/helpers/utilities/signer';
+import { deployMockPool } from '@aave/deploy-v3/dist/helpers/contract-deployments';
 import {
   ACLManager__factory,
   ConfiguratorLogic__factory,
@@ -18,7 +18,7 @@ import {
   PoolConfigurator__factory,
 } from '../types';
 import { makeSuite, TestEnv } from './helpers/make-suite';
-import { evmSnapshot, evmRevert } from '@hedy_chu/deploy-v3';
+import { evmSnapshot, evmRevert } from '@aave/deploy-v3';
 
 makeSuite('PausablePool', (testEnv: TestEnv) => {
   let _mockFlashLoanReceiver = {} as MockFlashLoanReceiver;

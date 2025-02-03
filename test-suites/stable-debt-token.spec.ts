@@ -13,7 +13,7 @@ import {
   getStableDebtToken,
   increaseTime,
   waitForTx,
-} from '@hedy_chu/deploy-v3';
+} from '@aave/deploy-v3';
 import { StableDebtToken__factory } from '../types';
 import { getStableDebtTokenEvent } from './helpers/utils/tokenization-events';
 declare var hre: HardhatRuntimeEnvironment;

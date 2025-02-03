@@ -10,8 +10,8 @@ import {
   getMockVariableDebtToken,
   getStableDebtToken,
   getVariableDebtToken,
-} from '@hedy_chu/deploy-v3/dist/helpers/contract-getters';
-import { getFirstSigner } from '@hedy_chu/deploy-v3/dist/helpers/utilities/signer';
+} from '@aave/deploy-v3/dist/helpers/contract-getters';
+import { getFirstSigner } from '@aave/deploy-v3/dist/helpers/utilities/signer';
 import {
   deployInitializableImmutableAdminUpgradeabilityProxy,
   deployMockAToken,
@@ -21,12 +21,12 @@ import {
   deployMockReentrantInitializableImple,
   deployMockStableDebtToken,
   deployMockVariableDebtToken,
-} from '@hedy_chu/deploy-v3/dist/helpers/contract-deployments';
+} from '@aave/deploy-v3/dist/helpers/contract-deployments';
 import {
   InitializableImmutableAdminUpgradeabilityProxy,
   InitializableImmutableAdminUpgradeabilityProxy__factory,
 } from '../types';
-import { evmSnapshot, evmRevert, getEthersSigners } from '@hedy_chu/deploy-v3';
+import { evmSnapshot, evmRevert, getEthersSigners } from '@aave/deploy-v3';
 
 makeSuite('Upgradeability', (testEnv: TestEnv) => {
   context('VersionedInitializable', async () => {
