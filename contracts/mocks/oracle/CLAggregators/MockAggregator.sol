@@ -15,6 +15,11 @@ contract MockAggregator {
     return _latestAnswer;
   }
 
+  function updatePrice(int256 newPrice) external {
+    _latestAnswer = newPrice;
+    emit AnswerUpdated(newPrice, 0, block.timestamp);
+  }
+
   function getTokenType() external pure returns (uint256) {
     return 1;
   }
