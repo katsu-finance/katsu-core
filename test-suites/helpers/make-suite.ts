@@ -103,8 +103,6 @@ const testEnv: TestEnv = {
 
 export async function initializeMakeSuite() {
   const [_deployer, ...restSigners] = await getEthersSigners();
-  const _deployerAddress = await _deployer.getAddress();
-  console.log('Deployer address: ', _deployerAddress);
   const deployer: SignerWithAddress = {
     address: await _deployer.getAddress(),
     signer: _deployer,

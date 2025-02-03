@@ -11,7 +11,6 @@ import {WadRayMath} from '../math/WadRayMath.sol';
 import {DataTypes} from '../types/DataTypes.sol';
 import {ReserveLogic} from './ReserveLogic.sol';
 import {EModeLogic} from './EModeLogic.sol';
-import {console} from 'hardhat/console.sol';
 
 /**
  * @title GenericLogic library

@@ -56,7 +56,7 @@ makeSuite('AaveOracle', (testEnv: TestEnv) => {
     const sourcesPrices = await (
       await aaveOracle.getAssetsPrices([mockToken.address])
     ).map((x) => x.toString());
-    // expect(await aaveOracle.getSourceOfAsset(mockToken.address)).to.be.eq(mockAggregator.address);
+    expect(await aaveOracle.getSourceOfAsset(mockToken.address)).to.be.eq(mockAggregator.address);
     expect(await aaveOracle.getAssetPrice(mockToken.address)).to.be.eq(assetPrice);
     expect(sourcesPrices).to.eql([assetPrice]);
   });

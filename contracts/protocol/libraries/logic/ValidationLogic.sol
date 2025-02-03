@@ -22,7 +22,6 @@ import {ReserveLogic} from './ReserveLogic.sol';
 import {GenericLogic} from './GenericLogic.sol';
 import {SafeCast} from '../../../dependencies/openzeppelin/contracts/SafeCast.sol';
 import {IncentivizedERC20} from '../../tokenization/base/IncentivizedERC20.sol';
-import {console} from 'hardhat/console.sol';
 
 /**
  * @title ReserveLogic library
