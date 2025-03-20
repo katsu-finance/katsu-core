@@ -92,10 +92,15 @@ const hardhatConfig = {
       url: 'https://mainnet.storyrpc.io',
       chainId: 1514,
     },
+    monadtest: {
+      url: 'https://testnet-rpc.monad.xyz',
+      chainId: 10143,
+    },
   },
   etherscan: {
     apiKey: {
-      storytest: process.env.API_KEY,
+      storytest: process.env.ETHERSCAN_KEY,
+      monadtest: process.env.ETHERSCAN_KEY,
     },
     customChains: [
       {
@@ -104,6 +109,14 @@ const hardhatConfig = {
         urls: {
           apiURL: 'https://odyssey.storyscan.xyz/api/',
           browserURL: 'https://odyssey.storyscan.xyz/',
+        },
+      },
+      {
+        network: 'monadtest',
+        chainId: 10143,
+        urls: {
+          apiURL: 'https://testnet.monadexplorer.com/api/',
+          browserURL: 'https://testnet.monadexplorer.com/',
         },
       },
     ],
