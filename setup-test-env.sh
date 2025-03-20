@@ -30,13 +30,13 @@ cp -r artifacts/* temp-artifacts
 
 # Import external @aave/periphery artifacts
 mkdir -p temp-artifacts/periphery
-cp -r node_modules/@aave/periphery-v3/artifacts/contracts/* temp-artifacts/periphery
+cp -r node_modules/@katsu-finance/periphery-v3/artifacts/contracts/* temp-artifacts/periphery
 
 # Import external @aave/deploy artifacts
 mkdir -p temp-artifacts/deploy
 cp -r node_modules/@aave/deploy-v3/artifacts/contracts/* temp-artifacts/deploy
 
 # Export MARKET_NAME variable to use Aave market as testnet deployment setup
-export MARKET_NAME="Test"
+export MARKET_NAME="story"
 export ENABLE_REWARDS="false"
 echo "[BASH] Testnet environment ready"

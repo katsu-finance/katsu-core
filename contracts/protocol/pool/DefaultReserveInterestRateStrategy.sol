@@ -184,7 +184,6 @@ contract DefaultReserveInterestRateStrategy is IDefaultInterestRateStrategy {
       uint256 excessBorrowUsageRatio = (vars.borrowUsageRatio - OPTIMAL_USAGE_RATIO).rayDiv(
         MAX_EXCESS_USAGE_RATIO
       );
-
       vars.currentStableBorrowRate +=
         _stableRateSlope1 +
         _stableRateSlope2.rayMul(excessBorrowUsageRatio);

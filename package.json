@@ -1,6 +1,6 @@
 {
-  "name": "@aave/core-v3",
-  "version": "1.19.4",
+  "name": "@katsu-finance/core-v3",
+  "version": "1.0.0",
   "description": "Aave Protocol V3 core smart contracts",
   "files": [
     "contracts",
@@ -8,6 +8,9 @@
     "types",
     "dist"
   ],
+  "publishConfig": {
+    "access": "public"
+  },
   "main": "dist/helpers/index.js",
   "engines": {
     "node": ">=16.0.0"
@@ -33,9 +36,9 @@
     "prepublish": "npm run compile && npm run build"
   },
   "devDependencies": {
-    "@aave/deploy-v3": "1.56.1",
-    "@aave/periphery-v3": "2.5.1",
-    "@ethersproject/bignumber": "^5.6.2",
+    "@ethersproject/bignumber": "^5.7.0",
+    "@aave/deploy-v3": "1.56.2",
+    "@katsu-finance/periphery-v3": "1.0.0",
     "@nomicfoundation/hardhat-chai-matchers": "1.0.5",
     "@nomicfoundation/hardhat-toolbox": "^2.0.0",
     "@tenderly/hardhat-tenderly": "1.1.0-beta.5",
@@ -46,6 +49,7 @@
     "dotenv": "8.2.0",
     "eth-sig-util": "2.5.3",
     "ethereumjs-util": "7.0.2",
+    "ethers": "^5.7.0",
     "hardhat": "2.12.2",
     "hardhat-contract-sizer": "2.0.3",
     "hardhat-dependency-compiler": "1.1.2",
@@ -83,7 +87,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git://github.com/aave/aave-v3-core"
+    "url": "git@github.com:katsu-finance/katsu-core.git"
   },
   "lint-staged": {
     "*.{ts,js,md,sol}": "prettier --write"

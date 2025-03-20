@@ -20,6 +20,7 @@ const DEFAULT_BLOCK_GAS_LIMIT = 12450000;
 const HARDFORK = 'london';
 
 const hardhatConfig = {
+  defaultNetwork: 'hardhat',
   gasReporter: {
     enabled: true,
   },
@@ -83,6 +84,29 @@ const hardhatConfig = {
         count: 20,
       },
     },
+    storytest: {
+      url: 'https://rpc.odyssey.storyrpc.io',
+      chainId: 1516,
+    },
+    story: {
+      url: 'https://mainnet.storyrpc.io',
+      chainId: 1514,
+    },
+  },
+  etherscan: {
+    apiKey: {
+      storytest: process.env.API_KEY,
+    },
+    customChains: [
+      {
+        network: 'storytest',
+        chainId: 1516,
+        urls: {
+          apiURL: 'https://odyssey.storyscan.xyz/api/',
+          browserURL: 'https://odyssey.storyscan.xyz/',
+        },
+      },
+    ],
   },
   namedAccounts: {
     ...DEFAULT_NAMED_ACCOUNTS,
